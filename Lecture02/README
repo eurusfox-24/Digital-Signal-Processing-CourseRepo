@@ -10,26 +10,20 @@ A 10 Hz sine wave was generated in MATLAB and sampled using frequencies of 15 Hz
 
 The maximum frequency of the original signal is:
 
-```text
 fmax = 10 Hz
-```
 
 According to the Nyquist Sampling Theorem:
 
-```text
 fs >= 2 × fmax
-```
 
 Therefore:
 
-```text
 fs >= 2 × 10 Hz
 fs >= 20 Hz
-```
 
 The theoretical minimum sampling frequency is therefore **20 Hz**.
 
-The tested sampling frequencies can be classified as follows:
+The tested sampling frequencies are:
 
 | Sampling Frequency | Nyquist Criterion |
 | ------------------ | ----------------- |
@@ -39,64 +33,64 @@ The tested sampling frequencies can be classified as follows:
 | 50 Hz              | Satisfies         |
 | 100 Hz             | Satisfies         |
 
-Although 20 Hz is theoretically the minimum sampling frequency, sampling exactly at the Nyquist rate is not recommended in practice. There is no safety margin for noise, frequency variations, or other higher-frequency components.
+Although 20 Hz is theoretically the minimum sampling frequency, sampling exactly at the Nyquist rate is not recommended in practice. There is no safety margin for noise, frequency variation, or other higher-frequency components.
 
-For this particular sine wave, sampling at exactly 20 Hz can also give a poor representation depending on the sampling phase. For example, the samples may repeatedly occur at zero crossings of the sine wave.
+For this sine wave, sampling exactly at 20 Hz can also give a poor representation depending on the sampling phase. The samples may repeatedly occur close to the zero crossings of the sine wave.
 
 ## Results
 
 ### 15 Hz
 
-The 15 Hz sampling frequency does not satisfy the Nyquist criterion. The sampled points do not correctly represent the original 10 Hz sine wave. This causes aliasing and makes the signal appear to have a different frequency.
+The 15 Hz sampling frequency does not satisfy the Nyquist criterion. The sampled points do not correctly represent the original 10 Hz sine wave. This causes aliasing and can make the signal appear to have a different frequency.
 
 ### 20 Hz
 
-The 20 Hz sampling frequency is exactly equal to the Nyquist rate. It theoretically satisfies the Nyquist criterion, but the representation is not reliable. In this experiment, samples can occur at the same positions in each cycle, such as the zero crossings.
+The 20 Hz sampling frequency is exactly equal to the Nyquist rate. It theoretically satisfies the Nyquist criterion, but the representation is not reliable. In this experiment, the sample points may occur at the same positions in every cycle, such as the zero crossings.
 
 ### 25 Hz
 
-The 25 Hz sampling frequency is above the Nyquist rate. The sampled points represent the original signal better than 15 Hz and 20 Hz, although the number of samples per cycle is still relatively low.
+The 25 Hz sampling frequency is above the Nyquist rate. The sampled points represent the original signal better than at 15 Hz and 20 Hz, although the number of samples per cycle is still relatively low.
 
 ### 50 Hz
 
-At 50 Hz, there are approximately five samples for every cycle of the 10 Hz signal. The sampled signal follows the shape of the original sine wave clearly and provides a good balance between accuracy and the amount of data generated.
+At 50 Hz, there are about five samples for every cycle of the 10 Hz signal. The sampled points follow the original sine wave clearly and provide a good balance between accuracy and the amount of data generated.
 
 ### 100 Hz
 
-At 100 Hz, there are approximately ten samples per cycle. The sampled points follow the original signal very closely. This provides the most detailed representation among the tested sampling frequencies, but it also produces more data for processing and storage.
+At 100 Hz, there are about ten samples per cycle. The sampled points follow the original signal very closely. This gives the most detailed representation among the tested sampling frequencies, but it also produces more data for processing and storage.
 
 ## Aliasing Discussion
 
-Aliasing occurs at **15 Hz** because the sampling frequency is below the minimum Nyquist rate of 20 Hz. When a signal is sampled too slowly, the digital samples cannot correctly describe how quickly the original signal is changing. As a result, the sampled signal can appear to contain a different frequency.
+Aliasing occurs at **15 Hz** because the sampling frequency is below the minimum Nyquist rate of 20 Hz.
 
-Sampling at 20 Hz is exactly at the Nyquist limit. Although it theoretically satisfies the Nyquist theorem, it is not a robust practical choice because small frequency changes, noise, or an unfortunate sampling phase can cause an inaccurate representation.
+Aliasing happens when a signal is sampled too slowly. The digital samples cannot correctly represent how quickly the original signal is changing, so the signal may appear to have a different frequency.
 
-The 25 Hz, 50 Hz, and 100 Hz sampling frequencies are above the Nyquist rate and therefore avoid aliasing for the ideal 10 Hz signal.
+Sampling at 20 Hz is exactly at the Nyquist limit. Although it theoretically satisfies the Nyquist theorem, it is not a robust practical choice because small frequency changes, noise, or the sampling phase can cause an inaccurate representation.
 
-For this system, I would recommend **50 Hz**. It provides five samples per signal cycle, gives a clear representation of the waveform, and provides a reasonable safety margin above the Nyquist frequency without generating as much data as 100 Hz.
+The 25 Hz, 50 Hz, and 100 Hz sampling frequencies are above the Nyquist rate and can represent the ideal 10 Hz signal without aliasing.
+
+For this system, I would recommend **50 Hz** because it provides a clear representation of the signal and a reasonable margin above the Nyquist frequency without producing as much data as 100 Hz.
 
 ## Engineering Recommendation
 
-I would choose a sampling frequency of **50 Hz** for this simplified condition-monitoring system.
+I would choose a sampling frequency of **50 Hz** for this simplified condition monitoring system.
 
 For a 10 Hz signal:
 
-```text
 50 Hz / 10 Hz = 5 samples per cycle
-```
 
-This gives a better representation of the waveform than sampling close to the Nyquist limit.
+This gives a clearer representation of the waveform than sampling close to the Nyquist limit.
 
-Using 100 Hz provides even more detail, but it also increases the amount of data that must be stored and processed. Since condition-monitoring systems may operate continuously, processing requirements and data storage are important considerations.
+Using 100 Hz gives more detail, but it also increases the amount of data that must be stored and processed. Since condition monitoring systems may operate continuously, processing requirements and data storage are important engineering considerations.
 
 Therefore, 50 Hz provides a reasonable balance between:
 
-* signal accuracy,
-* robustness,
-* computational requirements,
-* and data storage requirements.
+* signal accuracy
+* robustness
+* processing requirements
+* data storage requirements
 
-In a real industrial system, the sampling frequency would also depend on the complete frequency range of the sensor signal, expected noise, and the characteristics of the anti-aliasing filter.
+In a real industrial system, the sampling frequency would also depend on the full frequency range of the sensor signal, noise, and the anti-aliasing filter used in the system.
 
 ## AI Usage
 
@@ -106,29 +100,27 @@ ChatGPT
 
 ### Prompt(s)
 
-I used prompts such as:
-
-```text
-Help me generate MATLAB code for a 10 Hz sine wave and investigate sampling at 15 Hz, 20 Hz, 25 Hz, 50 Hz, and 100 Hz.
-
-What is sampling and aliasing?
-
-Explain the Nyquist Sampling Theorem for a 10 Hz signal.
-```
+* Help me generate MATLAB code for a 10 Hz sine wave and investigate sampling at 15 Hz, 20 Hz, 25 Hz, 50 Hz, and 100 Hz.
+* What is sampling and aliasing?
+* Explain the Nyquist Sampling Theorem for a 10 Hz signal.
 
 ### Summary of AI Response
 
 ChatGPT explained how to generate the original sine wave, create different sampling time vectors, and plot the sampled points together with the original signal.
 
-It also explained that the Nyquist Sampling Theorem requires the sampling frequency to be at least twice the highest frequency contained in the signal. For the 10 Hz signal, the theoretical minimum sampling frequency is therefore 20 Hz.
+It also explained that the Nyquist Sampling Theorem requires the sampling frequency to be at least twice the highest frequency contained in the signal.
 
-ChatGPT also explained that aliasing occurs when the sampling frequency is too low and causes the sampled signal to appear as a different frequency.
+For a 10 Hz signal, the theoretical minimum sampling frequency is:
+
+fs >= 2 × 10 Hz = 20 Hz
+
+ChatGPT also explained that aliasing occurs when the sampling frequency is too low and can cause the sampled signal to appear to have a different frequency.
 
 ### What I Modified
 
-I organized the MATLAB code into sections for each sampling frequency and used the required filenames for the generated figures.
+I organized the MATLAB code into separate sections for each sampling frequency and used the required filenames for the generated figures.
 
-I also reviewed the explanations and rewrote parts of them in my own words based on my understanding of sampling, Nyquist frequency, and aliasing.
+I also reviewed the AI explanations and adjusted the wording based on my own understanding of sampling, the Nyquist theorem, and aliasing.
 
 ### How I Verified the Results
 
@@ -136,21 +128,17 @@ I verified the results by running the MATLAB script and visually comparing the s
 
 I also checked the Nyquist calculation manually:
 
-```text
 fs >= 2 × fmax
-fs >= 2 × 10
+fs >= 2 × 10 Hz
 fs >= 20 Hz
-```
 
-The 15 Hz plot showed an incorrect representation of the original signal, while the higher sampling frequencies represented the signal more accurately.
+I observed that the 15 Hz sampling frequency produced an incorrect representation of the original signal, while the higher sampling frequencies represented the signal more clearly.
 
-I also compared the number of samples per cycle. For example:
+I also compared the number of samples per cycle:
 
-```text
 50 Hz / 10 Hz = 5 samples per cycle
 
 100 Hz / 10 Hz = 10 samples per cycle
-```
 
-These observations were consistent with the expected sampling behaviour and the Nyquist Sampling Theorem.
+These results were consistent with the expected behaviour of sampling and the Nyquist Sampling Theorem.
 
