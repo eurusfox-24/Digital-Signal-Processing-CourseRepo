@@ -141,4 +141,3 @@ I also compared the number of samples per cycle:
 100 Hz / 10 Hz = 10 samples per cycle
 
 These results were consistent with the expected behaviour of sampling and the Nyquist Sampling Theorem.
-
